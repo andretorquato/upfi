@@ -34,7 +34,6 @@ export default function Home(): JSX.Element {
   // );
 
   const formattedData = useMemo(() => {
-    console.log(data);
     const newData = data?.pages.map(value => value.data.flat());
     return newData ? newData.flat() : null;
   }, [data]);

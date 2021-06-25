@@ -27,37 +27,7 @@ export function CardList({ cards }: CardsProps): JSX.Element {
       {/* TODO CARD GRID */}
       <SimpleGrid columns={3} spacing="10">
         {cards.map(card => (
-          <Box
-            key={card.id}
-            maxH="72"
-            maxW="80"
-            height="72"
-            width="80"
-            bg="gray.800"
-            borderRadius="6px"
-            cursor="pointer"
-          >
-            <Image src={card.url} width="full" height="40" fit="cover" />
-            <Text
-              fontSize="2xl"
-              fontWeight="medium"
-              color="gray.50"
-              marginTop="4"
-              marginLeft="4"
-            >
-              {card.title}
-            </Text>
-            <Text
-              fontSize="medium"
-              fontWeight="light"
-              color="gray.50"
-              marginTop="1"
-              marginLeft="4"
-              letterSpacing="wide"
-            >
-              {card.description}
-            </Text>
-          </Box>
+          <Card data={card} viewImage={() => card.url} />
         ))}
       </SimpleGrid>
       {/* TODO MODALVIEWIMAGE */}
