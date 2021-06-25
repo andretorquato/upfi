@@ -38,8 +38,25 @@ export function CardList({ cards }: CardsProps): JSX.Element {
             cursor="pointer"
           >
             <Image src={card.url} width="full" height="40" fit="cover" />
-            <Text>{card.title}</Text>
-            <Text>{card.description}</Text>
+            <Text
+              fontSize="2xl"
+              fontWeight="medium"
+              color="gray.50"
+              marginTop="4"
+              marginLeft="4"
+            >
+              {card.title}
+            </Text>
+            <Text
+              fontSize="medium"
+              fontWeight="light"
+              color="gray.50"
+              marginTop="1"
+              marginLeft="4"
+              letterSpacing="wide"
+            >
+              {card.description}
+            </Text>
           </Box>
         ))}
       </SimpleGrid>
