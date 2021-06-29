@@ -33,7 +33,7 @@ export function ModalViewImage({
           <Image src={imgUrl} maxW="900px" maxH="600px" />
         </ModalBody>
 
-        <ModalFooter bg="gray.800">
+        <ModalFooter justifyContent="flex-start">
           <Link href={imgUrl} isExternal textAlign="left" onClick={onClose}>
             Abrir original
           </Link>
