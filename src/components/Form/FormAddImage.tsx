@@ -69,6 +69,9 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
           placeholder="Título da imagem..."
           // TODO SEND TITLE ERRORS
           // TODO REGISTER TITLE INPUT WITH VALIDATIONS
+          {...register('title', {
+            required: true,
+          })}
         />
 
         <TextInput

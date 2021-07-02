@@ -9,7 +9,7 @@ import { Loading } from '../components/Loading';
 import { Error } from '../components/Error';
 
 export default function Home(): JSX.Element {
-  const fetchImages = async ({ pageParam = 0 }): Promise<any> => {
+  const fetchImages = async ({ pageParam = null }): Promise<any> => {
     const response = await api.get(`api/images?after=${pageParam}`);
     const { data } = response;
     return data;
@@ -53,6 +53,7 @@ export default function Home(): JSX.Element {
 
       <Box maxW={1120} px={20} mx="auto" my={20}>
         <CardList cards={formattedData} />
+        <Button mt="10">Carregar mais</Button>
         {/* TODO RENDER LOAD MORE BUTTON IF DATA HAS NEXT PAGE */}
       </Box>
     </>
