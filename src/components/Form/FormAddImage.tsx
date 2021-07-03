@@ -18,6 +18,18 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
 
   const formValidations = {
     image: {
+      required: true,
+      validate: {
+        lessThan10MB: (files: File[]) => files[0].size / 1024 / 1024 <= 10,
+        acceptedFormats: (files: File[]) => {
+          const regex = /image\/(jpg|png|gif)/g;
+          const { type } = files[0];
+          console.log(files[0]);
+          if (regex.exec(type)) return true;
+
+          return false;
+        },
+      },
       // TODO REQUIRED, LESS THAN 10 MB AND ACCEPTED FORMATS VALIDATIONS
     },
     title: {
@@ -61,6 +73,7 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
           setLocalImageUrl={setLocalImageUrl}
           setError={setError}
           trigger={trigger}
+          {...register('image', { ...formValidations.image })}
           // TODO SEND IMAGE ERRORS
           // TODO REGISTER IMAGE INPUT WITH VALIDATIONS
         />
