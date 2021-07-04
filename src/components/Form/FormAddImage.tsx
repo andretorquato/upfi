@@ -18,24 +18,39 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
 
   const formValidations = {
     image: {
-      required: true,
+      required: 'Arquivo obrigatório',
       validate: {
-        lessThan10MB: (files: File[]) => files[0].size / 1024 / 1024 <= 10,
+        lessThan10MB: (files: File[]) =>
+          files[0].size / 1024 / 1024 <= 10 ||
+          'O arquivo deve ser menor que 10MB',
         acceptedFormats: (files: File[]) => {
           const regex = /image\/(jpg|png|gif)/g;
           const { type } = files[0];
-          console.log(files[0]);
           if (regex.exec(type)) return true;
 
-          return false;
+          return 'Somente são aceitos arquivos PNG, JPEG e GIF';
         },
       },
       // TODO REQUIRED, LESS THAN 10 MB AND ACCEPTED FORMATS VALIDATIONS
     },
     title: {
+      required: 'Título obrigatório',
+      minLength: {
+        value: 2,
+        message: 'Mínimo de 2 caracteres',
+      },
+      maxLength: {
+        value: 20,
+        message: 'Máximo de 20 caracteres',
+      },
       // TODO REQUIRED, MIN AND MAX LENGTH VALIDATIONS
     },
     description: {
+      required: 'Descrição obrigatória',
+      maxLength: {
+        value: 20,
+        message: 'Máximo de 65 caracteres',
+      },
       // TODO REQUIRED, MAX LENGTH VALIDATIONS
     },
   };
@@ -74,21 +89,22 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
           setError={setError}
           trigger={trigger}
           {...register('image', { ...formValidations.image })}
+          error={errors.image}
           // TODO SEND IMAGE ERRORS
           // TODO REGISTER IMAGE INPUT WITH VALIDATIONS
         />
 
         <TextInput
           placeholder="Título da imagem..."
+          {...register('title', { ...formValidations.title })}
+          error={errors.title}
           // TODO SEND TITLE ERRORS
           // TODO REGISTER TITLE INPUT WITH VALIDATIONS
-          {...register('title', {
-            required: true,
-          })}
         />
-
         <TextInput
           placeholder="Descrição da imagem..."
+          {...register('description', { ...formValidations.description })}
+          error={errors.description}
           // TODO SEND DESCRIPTION ERRORS
           // TODO REGISTER DESCRIPTION INPUT WITH VALIDATIONS
         />
