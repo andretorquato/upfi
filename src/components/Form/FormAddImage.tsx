@@ -76,6 +76,7 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
   const onSubmit = async (data: Record<string, unknown>): Promise<void> => {
     try {
       if (!imageUrl) {
+        console.log(data);
         toast({
           title: 'Imagem não adicionada',
           description:
@@ -103,6 +104,8 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
       });
       // TODO SHOW ERROR TOAST IF SUBMIT FAILED
     } finally {
+      reset();
+      closeModal();
       // TODO CLEAN FORM, STATES AND CLOSE MODAL
     }
   };
