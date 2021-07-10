@@ -23,7 +23,9 @@ export default function Home(): JSX.Element {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery('images', fetchImages, {
-    getNextPageParam: pageParam => pageParam,
+    getNextPageParam: pageParam => {
+      return pageParam.after ? pageParam.after : null;
+    },
   });
   // } = useInfiniteQuery(
   //   'images',
@@ -53,7 +55,15 @@ export default function Home(): JSX.Element {
 
       <Box maxW={1120} px={20} mx="auto" my={20}>
         <CardList cards={formattedData} />
-        <Button mt="10">Carregar mais</Button>
+        {hasNextPage && (
+          <Button
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage || isFetchingNextPage}
+            mt="10"
+          >
+            {isFetchingNextPage ? 'Carregando...' : 'Carregar mais'}
+          </Button>
+        )}
         {/* TODO RENDER LOAD MORE BUTTON IF DATA HAS NEXT PAGE */}
       </Box>
     </>
