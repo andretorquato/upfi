@@ -23,7 +23,6 @@ export function CardList({ cards }: CardsProps): JSX.Element {
   // TODO FUNCTION HANDLE VIEW IMAGE
   function handleViewImage(url: string): void {
     setImgUrl(url);
-    console.log(imgUrl);
     onOpen();
   }
 

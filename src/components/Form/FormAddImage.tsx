@@ -57,7 +57,7 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
 
   const queryClient = useQueryClient();
   const mutation = useMutation(
-    data => api.post('api/images', data),
+    (data: any) => api.post('api/images', data),
     // TODO MUTATION API POST REQUEST,
     {
       onSuccess: async () => {
@@ -76,7 +76,6 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
   const onSubmit = async (data: Record<string, unknown>): Promise<void> => {
     try {
       if (!imageUrl) {
-        console.log(data);
         toast({
           title: 'Imagem não adicionada',
           description:
@@ -84,29 +83,26 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
           status: 'error',
           duration: 3000,
         });
+        throw new Error('add image');
+      } else {
+        await mutation.mutateAsync({ ...data, url: imageUrl });
+        toast({
+          title: 'Imagem cadastrada',
+          description: 'Sua imagem foi cadastrada com sucesso.',
+          status: 'success',
+          duration: 3000,
+        });
       }
-
-      toast({
-        title: 'Imagem cadastrada',
-        description: 'Sua imagem foi cadastrada com sucesso.',
-        status: 'success',
-        duration: 3000,
-      });
-      // TODO SHOW ERROR TOAST IF IMAGE URL DOES NOT EXISTS
-      // TODO EXECUTE ASYNC MUTATION
-      // TODO SHOW SUCCESS TOAST
     } catch {
       toast({
         title: 'Falha no cadastro',
         description: 'Ocorreu um erro ao tentar cadastrar a sua imagem.',
-        status: 'success',
+        status: 'error',
         duration: 3000,
       });
-      // TODO SHOW ERROR TOAST IF SUBMIT FAILED
     } finally {
       reset();
       closeModal();
-      // TODO CLEAN FORM, STATES AND CLOSE MODAL
     }
   };
 
@@ -121,23 +117,17 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
           trigger={trigger}
           {...register('image', { ...formValidations.image })}
           error={errors.image}
-          // TODO SEND IMAGE ERRORS
-          // TODO REGISTER IMAGE INPUT WITH VALIDATIONS
         />
 
         <TextInput
           placeholder="Título da imagem..."
           {...register('title', { ...formValidations.title })}
           error={errors.title}
-          // TODO SEND TITLE ERRORS
-          // TODO REGISTER TITLE INPUT WITH VALIDATIONS
         />
         <TextInput
           placeholder="Descrição da imagem..."
           {...register('description', { ...formValidations.description })}
           error={errors.description}
-          // TODO SEND DESCRIPTION ERRORS
-          // TODO REGISTER DESCRIPTION INPUT WITH VALIDATIONS
         />
       </Stack>
 

@@ -9,8 +9,10 @@ import { Loading } from '../components/Loading';
 import { Error } from '../components/Error';
 
 export default function Home(): JSX.Element {
-  const fetchImages = async ({ pageParam = 0 }): Promise<any> => {
-    const response = await api.get(`api/images?after=${pageParam}`);
+  const fetchImages = async ({ pageParam = null }): Promise<any> => {
+    const response = await api.get(`api/images`, {
+      params: { after: pageParam },
+    });
     const { data } = response;
     return data;
   };
@@ -27,14 +29,6 @@ export default function Home(): JSX.Element {
       return pageParam.after ? pageParam.after : null;
     },
   });
-  // } = useInfiniteQuery(
-  //   'images',
-
-  //   // TODO AXIOS REQUEST WITH PARAM
-  //   ,
-  //   // TODO GET AND RETURN NEXT PAGE PARAM
-  // );
-
   const formattedData = useMemo(() => {
     const newData = data?.pages.map(value => value.data.flat());
     return newData ? newData.flat() : null;
@@ -43,9 +37,6 @@ export default function Home(): JSX.Element {
   if (isLoading) {
     return <Loading />;
   }
-  // TODO RENDER LOADING SCREEN
-  // TODO RENDER ERROR SCREEN
-
   if (isError) {
     return <Error />;
   }
@@ -64,7 +55,6 @@ export default function Home(): JSX.Element {
             {isFetchingNextPage ? 'Carregando...' : 'Carregar mais'}
           </Button>
         )}
-        {/* TODO RENDER LOAD MORE BUTTON IF DATA HAS NEXT PAGE */}
       </Box>
     </>
   );
